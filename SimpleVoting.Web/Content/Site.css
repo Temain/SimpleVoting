@@ -1,24 +1,30 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿body > .ui.container {
+    margin-top: 3em;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.ui.container > h1 {
+    font-size: 3em;
+    text-align: center;
+    font-weight: normal;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+.ui.container > h2.header {
+    font-size: 1.8em;
+    font-weight: normal;
+    /*margin: 4em 0em 3em;*/
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+.ui.container > h4.divider {
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Icons';
+    src: url("../Fonts/icons.eot");
+    src: url("../Fonts/icons.eot?#iefix") format('embedded-opentype'), url("../Fonts/icons.woff") format('woff'), url("../Fonts/icons.ttf") format('truetype'), url("../Fonts/icons.svg#icons") format('svg');
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-decoration: inherit;
+    text-transform: none;
 }

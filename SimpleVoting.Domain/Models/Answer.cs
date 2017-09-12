@@ -23,6 +23,11 @@ namespace SimpleVoting.Domain.Models
         public string AnswerText { get; set; }
 
         /// <summary>
+        /// Порядок
+        /// </summary>
+        public int Order { get; set; }
+
+        /// <summary>
         /// Вопрос, к которому относится опция
         /// </summary>
         public int QuestionId { get; set; }
