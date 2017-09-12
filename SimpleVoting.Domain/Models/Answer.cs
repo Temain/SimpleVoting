@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SimpleVoting.Domain.Models
 {
@@ -16,6 +18,8 @@ namespace SimpleVoting.Domain.Models
         /// <summary>
         /// Текст опции
         /// </summary>
+        [Required]
+        [StringLength(200)]
         public string AnswerText { get; set; }
 
         /// <summary>
@@ -23,5 +27,10 @@ namespace SimpleVoting.Domain.Models
         /// </summary>
         public int QuestionId { get; set; }
         public Question Question { get; set; }
+
+        /// <summary>
+        /// Пользователи, выбраышие эту опцию
+        /// </summary>
+        public List<User> Users { get; set; }
     }
 }

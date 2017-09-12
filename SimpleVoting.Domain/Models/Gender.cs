@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SimpleVoting.Domain.Models
@@ -17,6 +18,8 @@ namespace SimpleVoting.Domain.Models
         /// <summary>
         /// Наименование
         /// </summary>
+        [Required]
+        [StringLength(20)]
         public string GenderName { get; set; }
 
         /// <summary>
