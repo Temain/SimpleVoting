@@ -4,11 +4,16 @@
 
 <h1>Голосование</h1>
 
-<h4 class="ui horizontal divider header">
-    <i class="info icon"></i>
-    Представьтесь, пожалуйста
-</h4>
 <div class="ui grid">
+    <div class="row">
+        <div class="sixteen wide column">
+            <h4 class="ui horizontal divider header">
+                <i class="info icon"></i>
+                Представьтесь, пожалуйста
+            </h4>
+        </div>
+    </div>
+
     <div class="row">
         <div class="two wide column"></div>
         <div class="four wide column">
@@ -21,17 +26,13 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" data-bind="with: User">
         <div class="two wide column"></div>
         <div class="four wide column">
             <label for="gender">Пол</label>
         </div>
         <div class="three wide column">
-            <select id="gender" class="ui fluid dropdown">
-                <option value=""></option>
-                <option value="1">Мужской</option>
-                <option value="0">Женский</option>
-            </select>
+            <select id="gender" class="ui fluid dropdown" data-bind="value: GenderId, options: Genders, optionsText: 'GenderName', optionsValue: 'GenderId', optionsCaption: ''"></select>
         </div>
     </div>
 
@@ -42,63 +43,119 @@
         </div>
         <div class="two wide column">
             <div class="ui fluid input">
-                <input id="age" type="number" min="10" max="110">
+                <input id="age" type="number" min="18" max="80">
             </div>
         </div>
     </div>
-</div>
-<h4 class="ui horizontal divider header">
-    <i class="help icon"></i>
-    Вопрос
-</h4>
 
-<div class="ui form">
-    <div class="grouped fields">
-        <label>Какой язык программирования Вы рекомендуете в качестве первого языка для начинающих?</label>
-        <div class="field">
-            <div class="ui radio checkbox">
-                <input type="radio" name="example2" checked="checked">
-                <label>С++</label>
-            </div>
+    <div class="row">
+        <div class="sixteen wide column">
+            <h4 class="ui horizontal divider header">
+                <i class="help icon"></i>
+                Вопрос
+            </h4>
         </div>
-        <div class="field">
-            <div class="ui radio checkbox">
-                <input type="radio" name="example2">
-                <label>Java</label>
-            </div>
-        </div>
-        <div class="field">
-            <div class="ui radio checkbox">
-                <input type="radio" name="example2">
-                <label>C#</label>
-            </div>
-        </div>
-        <div class="field">
-            <div class="ui radio checkbox">
-                <input type="radio" name="example2">
-                <label>Python</label>
-            </div>
-        </div>
-        <div class="field">
-            <div class="ui radio checkbox">
-                <input type="radio" name="example2">
-                <label>Php</label>
-            </div>
-        </div>
-        <div class="field">
-            <div class="ui radio checkbox">
-                <input type="radio" name="example2">
-                <label>Go</label>
-            </div>
-        </div>
-        <div class="field">
-            <div class="ui radio checkbox">
-                <input type="radio" name="example2">
-                <label>Другой</label>
+    </div>
+
+    <div class="row">
+        <div class="two wide column"></div>
+        <div class="twelve wide column">
+            <div class="ui form" data-bind="foreach: Questions">
+                <div class="grouped fields">
+                    <label data-bind="text: QuestionText"></label>
+                    <!-- ko foreach: Answers -->
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" data-bind="value: AnswerId, checked: $parent.SelectedAnswerId, attr: { name: 'question' + $parent.QuestionId(), id: 'answer' + AnswerId }">
+                            <label data-bind="text: AnswerText, attr: { for: 'answer' + AnswerId }"></label>
+                        </div>
+                    </div>
+                    <!-- /ko -->                    
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 <div class="ui center aligned basic segment">
-    <button class="ui teal centered large button">Отправить</button>
+    <button class="ui teal centered large button" data-bind="click: SaveVote">Отправить</button>
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/knockout")
+
+    <script>
+        var viewModel = new MainViewModel();
+        $(function () {
+            viewModel.GetVote();
+
+            ko.applyBindings(viewModel);
+        });
+
+        function MainViewModel() {
+            var self = this;
+            self.User = ko.observable();
+            self.Questions = ko.observableArray([]);
+
+            self.GetVote = function () {
+                $.ajax({
+                    url: '/api/voting',
+                    type: 'GET',
+                    success: function (response) {
+                        self.User(new UserViewModel(response.User));
+
+                        if (response.Questions && response.Questions.length > 0) {
+                            for (var i = 0; i < response.Questions.length; i++) {
+                                self.Questions.push(new QuestionViewModel(response.Questions[i]));
+                            }
+                        }
+
+                        $('.ui.dropdown').dropdown({ on: 'hover' });
+                    },
+                    error: function (error) {
+                        // noty.js
+                    }
+                });
+            };
+
+            self.SaveVote = function () {
+                var postData = ko.toJSON(self);
+
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/voting',
+                    data: postData,
+                    contentType: "application/json; charset=utf-8",
+                    beforeSend: function () { },
+                    error: function (response) { },
+                    success: function (response) { }
+                });
+            };
+        };
+
+        function UserViewModel(userViewModel) {
+            if (!userViewModel) {
+                userViewModel = {};
+            }
+
+            var self = this;
+            self.UserId = ko.observable(userViewModel.UserId || 0);
+            self.Username = ko.observable(userViewModel.Username || 0);
+            self.Age = ko.observable(userViewModel.Age || 0);
+            self.GenderId = ko.observable(userViewModel.GenderId || 0);
+            self.Genders = ko.observableArray(userViewModel.Genders || []);
+        }
+
+        function QuestionViewModel(questionViewModel) {
+            if (!questionViewModel) {
+                questionViewModel = {};
+            }
+
+            var self = this;
+            self.QuestionId = ko.observable(questionViewModel.QuestionId || 0);
+            self.QuestionText = ko.observable(questionViewModel.QuestionText || 0);
+            self.SelectedAnswerId = ko.observable(questionViewModel.SelectedAnswerId || 0);
+            self.Answers = ko.observableArray(questionViewModel.Answers || []);
+        }
+    </script>
+}

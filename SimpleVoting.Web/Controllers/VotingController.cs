@@ -13,23 +13,16 @@ namespace SimpleVoting.Web.Controllers
     public class VotingController : ApiController
     {
         private readonly IVotingService _votingService;
-        private readonly IDictionaryService _dictionaryService;
 
-        public VotingController(IVotingService votingService, IDictionaryService dictionaryService)
+        public VotingController(IVotingService votingService)
         {
             _votingService = votingService;
-            _dictionaryService = dictionaryService;
         }
 
         // GET: api/voting
         public IHttpActionResult GetVote()
         {
-            var vote = new VoteViewModel();
-
-            // Перенести в VotingService
-            var genders = _dictionaryService.GetGenders();
-
-            // Тут другие необходимые справочники...
+            var vote = _votingService.GetVote();
 
             return Ok(vote);
         }

@@ -25,6 +25,7 @@ namespace SimpleVoting.Domain.Models
         /// <summary>
         /// Возраст
         /// </summary>
+        [Range(18, 80)]
         public int Age { get; set; }
 
         /// <summary>

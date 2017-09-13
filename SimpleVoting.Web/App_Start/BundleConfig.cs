@@ -23,6 +23,9 @@ namespace SimpleVoting.Web
                 .Include("~/Scripts/semantic.js",
                          "~/Scripts/semantic.site.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/knockout")
+                .Include("~/Scripts/knockout-{version}.js"));
+
             bundles.Add(new StyleBundle("~/Content/css")
                 .Include("~/Content/site.css"));
 

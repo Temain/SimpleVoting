@@ -2,19 +2,20 @@
     padding-top: 3em;
 }
 
-.ui.container > h1 {
+.ui.container h1 {
     font-size: 3em;
     text-align: center;
     font-weight: normal;
 }
 
-.ui.container > h2.header {
+.ui.container h2.header {
     font-size: 1.8em;
     font-weight: normal;
 }
 
-.ui.container > h4.divider {
+.ui.container h4.divider {
     font-weight: normal;
+    margin-top: 1em;
 }
 
 .ui.header .icon:only-child {
@@ -32,4 +33,8 @@
     font-variant: normal;
     text-decoration: inherit;
     text-transform: none;
+}
+
+.ui.radio label {
+    cursor: pointer !important;
 }
