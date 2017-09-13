@@ -35,10 +35,16 @@ namespace SimpleVoting.Web.Controllers
                 return BadRequest(ModelState);
             }
 
-            //db.Genders.Add(gender);
-            //db.SaveChanges();
+            try
+            {
+                _votingService.SaveVote(viewModel);
 
-            //return CreatedAtRoute("DefaultApi", new { id = gender.GenderId }, gender);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             return null;
         }

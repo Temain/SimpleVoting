@@ -14,6 +14,7 @@
         </div>
     </div>
 
+    <!-- ko with: User -->
     <div class="row">
         <div class="two wide column"></div>
         <div class="four wide middle aligned column">
@@ -21,12 +22,12 @@
         </div>
         <div class="six wide column">
             <div class="ui fluid input">
-                <input id="username" type="text">
+                <input id="username" type="text" data-bind="value: Username">
             </div>
         </div>
     </div>
 
-    <div class="row" data-bind="with: User">
+    <div class="row">
         <div class="two wide column"></div>
         <div class="four wide middle aligned column">
             <label for="gender">Пол</label>
@@ -43,10 +44,11 @@
         </div>
         <div class="two wide column">
             <div class="ui fluid input">
-                <input id="age" type="number" min="18" max="80">
+                <input id="age" type="number" min="18" max="80" data-bind="value: Age">
             </div>
         </div>
     </div>
+    <!-- /ko -->
 
     <!-- ko foreach: Questions -->
     <div class="row">
@@ -84,8 +86,6 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/knockout")
-
     <script>
         var viewModel = new MainViewModel();
         $(function () {
@@ -148,6 +148,12 @@
             self.Genders = ko.observableArray(userViewModel.Genders || []);
         }
 
+        UserViewModel.prototype.toJSON = function () {
+            var copy = ko.toJS(this);
+            delete copy.Genders;
+            return copy;
+        }
+
         function QuestionViewModel(questionViewModel) {
             if (!questionViewModel) {
                 questionViewModel = {};
@@ -158,6 +164,13 @@
             self.QuestionText = ko.observable(questionViewModel.QuestionText || 0);
             self.SelectedAnswerId = ko.observable(questionViewModel.SelectedAnswerId || 0);
             self.Answers = ko.observableArray(questionViewModel.Answers || []);
+        }
+
+        QuestionViewModel.prototype.toJSON = function () {
+            var copy = ko.toJS(this);
+            delete copy.QuestionText;
+            delete copy.Answers;
+            return copy;
         }
     </script>
 }

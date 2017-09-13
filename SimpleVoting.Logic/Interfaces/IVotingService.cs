@@ -5,6 +5,6 @@ namespace SimpleVoting.Logic.Interfaces
     public interface IVotingService
     {
         VoteViewModel GetVote();
-        void SaveVote();
+        void SaveVote(VoteViewModel viewModel);
     }
 }

@@ -4,6 +4,7 @@ using ClassSchedule.Domain.Context;
 using SimpleVoting.Logic.Interfaces;
 using SimpleVoting.Logic.Models;
 using System.Linq;
+using SimpleVoting.Domain.Models;
 
 namespace SimpleVoting.Logic.Services
 {
@@ -18,6 +19,9 @@ namespace SimpleVoting.Logic.Services
             _dictionaryService = dictionaryService;
         }
 
+        /// <summary>
+        /// Получение необходимых данных для госования
+        /// </summary>
         public VoteViewModel GetVote()
         {
             var questions = _context.Questions
@@ -51,9 +55,49 @@ namespace SimpleVoting.Logic.Services
             return vote;
         }
 
-        public void SaveVote()
+        /// <summary>
+        /// Сохранение результатов голосования
+        /// </summary>
+        public void SaveVote(VoteViewModel viewModel)
         {
-            throw new NotImplementedException();
+            if (viewModel.User == null)
+            {
+                // Если нет информации о пользователе
+                // throw
+            }
+
+            if (viewModel.Questions == null || !viewModel.Questions.Any())
+            {
+                // Если ответов на вопросы нет
+                // throw
+            }
+            else
+            {
+                // Если есть ответы на вопросы, но не на все
+                var activeQuestions = _context.Questions.Count(x => !x.IsDisabled);
+                var questionsAnswers = viewModel.Questions.Count(x => x.SelectedAnswerId != 0);
+                if (activeQuestions != questionsAnswers)
+                {
+                    // throw 
+                }
+            }
+
+            var selectedAnswers = viewModel.Questions.Select(x => x.SelectedAnswerId);
+            var answers = _context.Answers.Where(x => selectedAnswers.Contains(x.AnswerId)).ToList();
+
+            // Если ответ не соответствует вопросу
+            // ...
+
+            var user = new User
+            {
+                Username = viewModel.User.Username,
+                GenderId = viewModel.User.GenderId,
+                Age = viewModel.User.Age,
+                Answers = answers
+            };
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
         }
     }
 }
