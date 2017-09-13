@@ -23,6 +23,11 @@ namespace SimpleVoting.Domain.Models
         public string QuestionText { get; set; }
 
         /// <summary>
+        /// Отображать / не отображать вопрос
+        /// </summary>
+        public bool IsDisabled { get; set; }
+
+        /// <summary>
         /// Опции для голосования
         /// </summary>
         public List<Answer> Answers { get; set; }

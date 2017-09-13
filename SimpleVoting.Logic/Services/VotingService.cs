@@ -22,6 +22,7 @@ namespace SimpleVoting.Logic.Services
         {
             var questions = _context.Questions
                 .Include(x => x.Answers)
+                .Where(x => !x.IsDisabled)
                 .Select(x => new QuestionViewModel
                 {
                     QuestionId = x.QuestionId,

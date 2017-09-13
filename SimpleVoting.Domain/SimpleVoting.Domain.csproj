@@ -56,6 +56,10 @@
     <Compile Include="Migrations\201709121706197_AddedOrderFieldToAnswerTable.Designer.cs">
       <DependentUpon>201709121706197_AddedOrderFieldToAnswerTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709131333393_AddedIsDisabledToQuestionTable.cs" />
+    <Compile Include="Migrations\201709131333393_AddedIsDisabledToQuestionTable.Designer.cs">
+      <DependentUpon>201709131333393_AddedIsDisabledToQuestionTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Gender.cs" />
@@ -73,6 +77,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709121706197_AddedOrderFieldToAnswerTable.resx">
       <DependentUpon>201709121706197_AddedOrderFieldToAnswerTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709131333393_AddedIsDisabledToQuestionTable.resx">
+      <DependentUpon>201709131333393_AddedIsDisabledToQuestionTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
