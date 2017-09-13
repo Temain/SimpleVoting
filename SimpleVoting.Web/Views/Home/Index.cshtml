@@ -12,11 +12,11 @@
     <div class="row">
         <div class="two wide column"></div>
         <div class="four wide column">
-            <label class="large text">Ваше имя</label>
+            <label for="username">Имя</label>
         </div>
         <div class="six wide column">
             <div class="ui fluid input">
-                <input type="text">
+                <input id="username" type="text">
             </div>
         </div>
     </div>
@@ -24,23 +24,25 @@
     <div class="row">
         <div class="two wide column"></div>
         <div class="four wide column">
-            <label class="large text">Возраст</label>
+            <label for="gender">Пол</label>
         </div>
         <div class="three wide column">
-            <div class="ui fluid input">
-                <input type="text">
-            </div>
+            <select id="gender" class="ui fluid dropdown">
+                <option value=""></option>
+                <option value="1">Мужской</option>
+                <option value="0">Женский</option>
+            </select>
         </div>
     </div>
 
     <div class="row">
         <div class="two wide column"></div>
         <div class="four wide column">
-            <label class="large text">Пол</label>
+            <label for="age">Возраст</label>
         </div>
-        <div class="three wide column">
+        <div class="two wide column">
             <div class="ui fluid input">
-                <input type="text">
+                <input id="age" type="number" min="10" max="110">
             </div>
         </div>
     </div>
@@ -49,7 +51,54 @@
     <i class="help icon"></i>
     Вопрос
 </h4>
-<h2 class="ui header">
-    @*<span class="ui grey circular massive label">?</span>*@
-    Какой язык программирования Вы рекомендуете в качестве первого языка для начинающих?
-</h2>
+
+<div class="ui form">
+    <div class="grouped fields">
+        <label>Какой язык программирования Вы рекомендуете в качестве первого языка для начинающих?</label>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="example2" checked="checked">
+                <label>С++</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="example2">
+                <label>Java</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="example2">
+                <label>C#</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="example2">
+                <label>Python</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="example2">
+                <label>Php</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="example2">
+                <label>Go</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                <input type="radio" name="example2">
+                <label>Другой</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui center aligned basic segment">
+    <button class="ui teal centered large button">Отправить</button>
+</div>

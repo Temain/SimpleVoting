@@ -1,5 +1,5 @@
 ﻿body > .ui.container {
-    margin-top: 3em;
+    padding-top: 3em;
 }
 
 .ui.container > h1 {
@@ -11,11 +11,16 @@
 .ui.container > h2.header {
     font-size: 1.8em;
     font-weight: normal;
-    /*margin: 4em 0em 3em;*/
 }
 
 .ui.container > h4.divider {
     font-weight: normal;
+}
+
+.ui.header .icon:only-child {
+    display: inline-block;
+    padding: 0em;
+    margin-right: 0 !important;
 }
 
 @font-face {

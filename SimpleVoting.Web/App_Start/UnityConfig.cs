@@ -1,6 +1,9 @@
 using System;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
+using ClassSchedule.Domain.Context;
+using SimpleVoting.Logic.Interfaces;
+using SimpleVoting.Logic.Services;
 
 namespace SimpleVoting.Web.App_Start
 {
@@ -37,6 +40,11 @@ namespace SimpleVoting.Web.App_Start
 
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();
+
+            container.RegisterType<ApplicationDbContext>(new PerRequestLifetimeManager());
+            container.RegisterType<IVotingService, VotingService>();
+            container.RegisterType<IDictionaryService, DictionaryService>();
+            container.RegisterType<IReportingService, ReportingService>();
         }
     }
 }

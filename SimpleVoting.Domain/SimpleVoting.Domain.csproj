@@ -52,6 +52,10 @@
     <Compile Include="Migrations\201709120742231_Init.Designer.cs">
       <DependentUpon>201709120742231_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709121706197_AddedOrderFieldToAnswerTable.cs" />
+    <Compile Include="Migrations\201709121706197_AddedOrderFieldToAnswerTable.Designer.cs">
+      <DependentUpon>201709121706197_AddedOrderFieldToAnswerTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Gender.cs" />
@@ -66,6 +70,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201709120742231_Init.resx">
       <DependentUpon>201709120742231_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709121706197_AddedOrderFieldToAnswerTable.resx">
+      <DependentUpon>201709121706197_AddedOrderFieldToAnswerTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
