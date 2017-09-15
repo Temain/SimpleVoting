@@ -20,9 +20,9 @@
         <div class="four wide middle aligned column">
             <label for="username">Имя</label>
         </div>
-        <div class="six wide column">
-            <div class="ui fluid input">
-                <input id="username" type="text" data-bind="value: Username">
+        <div class="six wide column ui form">
+            <div class="ui fluid field input">
+                <input id="username" name="username" type="text" data-bind="value: Username">
             </div>
         </div>
     </div>
@@ -33,7 +33,7 @@
             <label for="gender">Пол</label>
         </div>
         <div class="three wide column">
-            <select id="gender" class="ui fluid dropdown" data-bind="value: GenderId, options: Genders, optionsText: 'GenderName', optionsValue: 'GenderId', optionsCaption: ''"></select>
+            <select id="gender" class="ui fluid field dropdown" data-bind="value: GenderId, options: Genders, optionsText: 'GenderName', optionsValue: 'GenderId', optionsCaption: ''"></select>
         </div>
     </div>
 
@@ -43,9 +43,16 @@
             <label for="age">Возраст</label>
         </div>
         <div class="two wide column">
-            <div class="ui fluid input">
+            <div class="ui fluid field input">
                 <input id="age" type="number" min="18" max="80" data-bind="value: Age">
             </div>
+        </div>
+    </div>
+
+    <div id="errors" class="row" style="display: none;">
+        <div class="two wide column"></div>
+        <div class="twelve wide column">
+            <div class="ui error message"></div>
         </div>
     </div>
     <!-- /ko -->
@@ -82,7 +89,7 @@
 </div>
 
 <div class="ui center aligned basic segment">
-    <button class="ui teal centered large button" data-bind="click: SaveVote">Отправить</button>
+    <button class="ui teal centered large submit button" data-bind="click: SaveVote">Отправить</button>
 </div>
 
 @section Scripts {
@@ -113,14 +120,57 @@
                         }
 
                         $('.ui.dropdown').dropdown({ on: 'hover' });
+                        $('.ui.grid')
+                            .form({
+                                fields: {
+                                    empty: {
+                                        identifier: 'username',
+                                        rules: [
+                                            {
+                                                type: 'empty',
+                                                prompt: 'Необходимо указать имя'
+                                            }
+                                        ]
+                                    },
+                                    gender: {
+                                        identifier: 'gender',
+                                        rules: [
+                                            {
+                                                type: 'empty',
+                                                prompt: 'Выберите пол'
+                                            }
+                                        ]
+                                    },
+                                    age: {
+                                        identifier: 'age',
+                                        rules: [
+                                            {
+                                                type: 'empty',
+                                                prompt: 'Необходимо указать возраст'
+                                            },
+                                            {
+                                                type: 'integer[18..80]',
+                                                prompt: 'Допускаются только люди возрастом от 18 до 80 лет'
+                                            }
+                                        ]
+                                    }
+                                }
+                            });
                     },
                     error: function (error) {
-                        // noty.js
+                        var message = 'При получении данных произошла ошибка';
+                        console.log(message);
+                        var noty = new Noty(notyOptions);
+                        noty.options.type = 'error';
+                        noty.options.text = message;
+                        noty.show();
                     }
                 });
             };
 
             self.SaveVote = function () {
+                if (!self.ValidateVote()) return;
+
                 var postData = ko.toJSON(self);
 
                 $.ajax({
@@ -129,9 +179,32 @@
                     data: postData,
                     contentType: "application/json; charset=utf-8",
                     beforeSend: function () { },
-                    error: function (response) { },
+                    error: function (response) {
+                        var message = 'Пожалуйста, исправьте ошибки';
+                        var noty = new Noty(notyOptions);
+                        noty.options.type = 'error';
+                        noty.options.text = message;
+                        noty.show();
+                    },
                     success: function (response) { }
                 });
+            };
+
+            self.ValidateVote = function () {
+                $('.ui.grid').form('validate form');
+                var isValid = $('.ui.grid').form('is valid');
+                if (!isValid) {
+                    var message = 'Пожалуйста, исправьте ошибки';
+                    var noty = new Noty(notyOptions);
+                    noty.options.type = 'error';
+                    noty.options.text = message;
+                    noty.show();
+                    $('#errors').show();
+                } else {
+                    $('#errors').hide();
+                }
+
+                return isValid;
             };
         };
 
@@ -142,8 +215,8 @@
 
             var self = this;
             self.UserId = ko.observable(userViewModel.UserId || 0);
-            self.Username = ko.observable(userViewModel.Username || 0);
-            self.Age = ko.observable(userViewModel.Age || 0);
+            self.Username = ko.observable(userViewModel.Username || '');
+            self.Age = ko.observable(userViewModel.Age || '');
             self.GenderId = ko.observable(userViewModel.GenderId || 0);
             self.Genders = ko.observableArray(userViewModel.Genders || []);
         }
@@ -161,7 +234,7 @@
 
             var self = this;
             self.QuestionId = ko.observable(questionViewModel.QuestionId || 0);
-            self.QuestionText = ko.observable(questionViewModel.QuestionText || 0);
+            self.QuestionText = ko.observable(questionViewModel.QuestionText || '');
             self.SelectedAnswerId = ko.observable(questionViewModel.SelectedAnswerId || 0);
             self.Answers = ko.observableArray(questionViewModel.Answers || []);
         }

@@ -26,11 +26,18 @@ namespace SimpleVoting.Web
             bundles.Add(new ScriptBundle("~/bundles/knockout")
                 .Include("~/Scripts/knockout-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/notifications")
+                .Include("~/Scripts/noty/options.js",
+                         "~/Scripts/noty/noty.js"));
+
             bundles.Add(new StyleBundle("~/Content/css")
                 .Include("~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/semantic")
                 .Include("~/Content/semantic.css"));
+
+            bundles.Add(new StyleBundle("~/Content/notifications")
+                .Include("~/Content/noty/noty.css"));
         }
     }
 }

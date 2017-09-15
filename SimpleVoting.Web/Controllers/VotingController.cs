@@ -30,23 +30,31 @@ namespace SimpleVoting.Web.Controllers
         // POST: api/voting
         public IHttpActionResult PostVote(VoteViewModel viewModel)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid | !IsValidVote(viewModel))
             {
                 return BadRequest(ModelState);
             }
 
-            try
+            _votingService.SaveVote(viewModel);
+
+            return Ok();
+        }
+
+        private bool IsValidVote(VoteViewModel viewModel)
+        {
+            _votingService.ValidateVote(viewModel, out List<string> errorMessages);
+
+            if (errorMessages.Any())
             {
-                _votingService.SaveVote(viewModel);
+                foreach (var errorMessage in errorMessages)
+                {
+                    ModelState.AddModelError(string.Empty, errorMessage);
+                }
 
-                return Ok();
+                return false;
             }
-            catch (Exception ex)
-            {
 
-            }
-
-            return null;
+            return true;
         }
     }
 }

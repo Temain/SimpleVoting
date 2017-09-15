@@ -5,6 +5,7 @@ using SimpleVoting.Logic.Interfaces;
 using SimpleVoting.Logic.Models;
 using System.Linq;
 using SimpleVoting.Domain.Models;
+using System.Collections.Generic;
 
 namespace SimpleVoting.Logic.Services
 {
@@ -56,29 +57,32 @@ namespace SimpleVoting.Logic.Services
         }
 
         /// <summary>
-        /// Сохранение результатов голосования
+        /// Проверка голоса на валидность
         /// </summary>
-        public void SaveVote(VoteViewModel viewModel)
+        public bool ValidateVote(VoteViewModel viewModel, out List<string> errorMessages)
         {
+            errorMessages = new List<string>();
+
+            // Если нет информации о пользователе
             if (viewModel.User == null)
             {
-                // Если нет информации о пользователе
-                // throw
+                errorMessages.Add("Информация о пользователе не заполнена");
             }
 
+            // Если нет вопросов
             if (viewModel.Questions == null || !viewModel.Questions.Any())
             {
-                // Если ответов на вопросы нет
-                // throw
+                errorMessages.Add("В голосовании должен быть хотя бы один вопрос");
             }
             else
-            {
-                // Если есть ответы на вопросы, но не на все
-                var activeQuestions = _context.Questions.Count(x => !x.IsDisabled);
-                var questionsAnswers = viewModel.Questions.Count(x => x.SelectedAnswerId != 0);
+            {               
+                int activeQuestions = _context.Questions.Count(x => !x.IsDisabled);
+                int questionsAnswers = viewModel.Questions.Count(x => x.SelectedAnswerId != 0);
+
+                // Если ответов на вопросы нет
                 if (activeQuestions != questionsAnswers)
                 {
-                    // throw 
+                    errorMessages.Add("Не на все вопросы получен ответ");
                 }
             }
 
@@ -88,6 +92,17 @@ namespace SimpleVoting.Logic.Services
             // Если ответ не соответствует вопросу
             // ...
 
+            return true;
+        }
+
+        /// <summary>
+        /// Сохранение результатов голосования
+        /// </summary>
+        public void SaveVote(VoteViewModel viewModel)
+        {
+            var selectedAnswers = viewModel.Questions.Select(x => x.SelectedAnswerId);
+            var answers = _context.Answers.Where(x => selectedAnswers.Contains(x.AnswerId)).ToList();
+
             var user = new User
             {
                 Username = viewModel.User.Username,
@@ -95,6 +110,8 @@ namespace SimpleVoting.Logic.Services
                 Age = viewModel.User.Age,
                 Answers = answers
             };
+
+            throw new Exception("Но-но-но!");
 
             _context.Users.Add(user);
             _context.SaveChanges();

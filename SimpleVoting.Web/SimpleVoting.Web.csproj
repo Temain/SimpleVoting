@@ -195,6 +195,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\noty\noty.css" />
     <Content Include="Content\semantic.css" />
     <Content Include="Content\semantic.min.css" />
     <Content Include="favicon.ico" />
@@ -212,6 +213,7 @@
     <Content Include="Fonts\icons.otf" />
     <Content Include="Fonts\icons.ttf" />
     <Content Include="Fonts\icons.woff" />
+    <Content Include="Content\noty\noty.css.map" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -225,6 +227,9 @@
     <Content Include="Scripts\knockout-3.4.2.debug.js" />
     <Content Include="Scripts\knockout-3.4.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\noty\noty.js" />
+    <Content Include="Scripts\noty\noty.min.js" />
+    <Content Include="Scripts\noty\options.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -244,6 +249,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Scripts\noty\noty.js.map" />
+    <Content Include="Scripts\noty\noty.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
