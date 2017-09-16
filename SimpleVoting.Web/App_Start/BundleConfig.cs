@@ -26,6 +26,11 @@ namespace SimpleVoting.Web
             bundles.Add(new ScriptBundle("~/bundles/knockout")
                 .Include("~/Scripts/knockout-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/voting")
+                .Include("~/Scripts/voting/user.js",
+                         "~/Scripts/voting/question.js",
+                         "~/Scripts/voting/voting.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/notifications")
                 .Include("~/Scripts/noty/options.js",
                          "~/Scripts/noty/noty.js"));

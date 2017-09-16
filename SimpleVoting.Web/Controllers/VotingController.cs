@@ -13,10 +13,12 @@ namespace SimpleVoting.Web.Controllers
     public class VotingController : ApiController
     {
         private readonly IVotingService _votingService;
+        private readonly IReportingService _reportingService;
 
-        public VotingController(IVotingService votingService)
+        public VotingController(IVotingService votingService, IReportingService reportingService)
         {
             _votingService = votingService;
+            _reportingService = reportingService;
         }
 
         // GET: api/voting
@@ -55,6 +57,15 @@ namespace SimpleVoting.Web.Controllers
             }
 
             return true;
+        }
+
+        [HttpGet]
+        [Route("results")]
+        public IHttpActionResult Results()
+        {
+            var numberOfVoters = _reportingService.GetNumberOfVoters();
+
+            return Ok(numberOfVoters);
         }
     }
 }

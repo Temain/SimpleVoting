@@ -4,246 +4,121 @@
 
 <h1>Голосование</h1>
 
-<div class="ui grid">
-    <div class="row">
-        <div class="sixteen wide column">
-            <h4 class="ui horizontal divider header">
-                <i class="info icon"></i>
-                Представьтесь, пожалуйста
-            </h4>
-        </div>
-    </div>
+<!-- ko if: !IsDataLoaded() -->
+<div class="ui active inverted dimmer">
+    <div class="ui big text loader">Загрузка</div>
+</div>
+<!-- /ko -->
 
-    <!-- ko with: User -->
-    <div class="row">
-        <div class="two wide column"></div>
-        <div class="four wide middle aligned column">
-            <label for="username">Имя</label>
-        </div>
-        <div class="six wide column ui form">
-            <div class="ui fluid field input">
-                <input id="username" name="username" type="text" data-bind="value: Username">
+<div id="form" data-bind="visible: IsDataLoaded" style="display: none;">
+    <div class="ui grid">
+        <!-- ko with: User -->
+        <div class="row">
+            <div class="sixteen wide column">
+                <h4 class="ui horizontal divider header">
+                    <i class="info icon"></i>
+                    Представьтесь, пожалуйста
+                </h4>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="two wide column"></div>
-        <div class="four wide middle aligned column">
-            <label for="gender">Пол</label>
-        </div>
-        <div class="three wide column">
-            <select id="gender" class="ui fluid field dropdown" data-bind="value: GenderId, options: Genders, optionsText: 'GenderName', optionsValue: 'GenderId', optionsCaption: ''"></select>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="two wide column"></div>
-        <div class="four wide middle aligned column">
-            <label for="age">Возраст</label>
-        </div>
-        <div class="two wide column">
-            <div class="ui fluid field input">
-                <input id="age" type="number" min="18" max="80" data-bind="value: Age">
+        <div class="row">
+            <div class="two wide column"></div>
+            <div class="four wide middle aligned column">
+                <label for="username">Имя</label>
             </div>
-        </div>
-    </div>
-
-    <div id="errors" class="row" style="display: none;">
-        <div class="two wide column"></div>
-        <div class="twelve wide column">
-            <div class="ui error message"></div>
-        </div>
-    </div>
-    <!-- /ko -->
-
-    <!-- ko foreach: Questions -->
-    <div class="row">
-        <div class="sixteen wide column">
-            <h4 class="ui horizontal divider header">
-                <i class="help icon"></i>
-                Вопрос <!--ko text: $root.Questions().length > 1 ? '#' + ($index() + 1) : '' --><!--/ko-->
-            </h4>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="two wide column"></div>
-        <div class="twelve wide column">
-            <div class="ui form">
-                <div class="grouped fields">
-                    <label data-bind="text: QuestionText"></label>
-                    <!-- ko foreach: Answers -->
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                            <input type="radio" data-bind="value: AnswerId, checked: $parent.SelectedAnswerId, attr: { name: 'question' + $parent.QuestionId(), id: 'answer' + AnswerId }">
-                            <label data-bind="text: AnswerText, attr: { for: 'answer' + AnswerId }"></label>
-                        </div>
-                    </div>
-                    <!-- /ko -->                    
+            <div class="six wide column ui form">
+                <div class="ui fluid field input">
+                    <input id="username" name="User.Username" data-validation="username" type="text" data-bind="value: Username">
                 </div>
             </div>
         </div>
-    </div>
-    <!-- /ko -->
-</div>
 
-<div class="ui center aligned basic segment">
-    <button class="ui teal centered large submit button" data-bind="click: SaveVote">Отправить</button>
+        <div class="row">
+            <div class="two wide column"></div>
+            <div class="four wide middle aligned column">
+                <label for="gender">Пол</label>
+            </div>
+            <div class="three wide column">
+                <select id="gender" class="ui fluid field dropdown" name="User.GenderId" data-validation="gender" data-bind="value: GenderId, options: Genders, optionsText: 'GenderName', optionsValue: 'GenderId', optionsCaption: ''"></select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="two wide column"></div>
+            <div class="four wide middle aligned column">
+                <label for="age">Возраст</label>
+            </div>
+            <div class="two wide column">
+                <div class="ui fluid field input">
+                    <input id="age" type="number" min="18" max="80" name="User.Age" data-validation="age" data-bind="value: Age">
+                </div>
+            </div>
+        </div>
+
+        <div id="clientErrors" class="row" style="display: none;">
+            <div class="two wide column"></div>
+            <div class="twelve wide column">
+                <div class="ui client error message"></div>
+            </div>
+        </div>
+
+        <div id="serverErrors" class="row" style="display: none;">
+            <div class="two wide column"></div>
+            <div class="twelve wide column">
+                <div class="ui error message">
+                    <ul class="list" data-bind="foreach: $root.ValidationErrors">
+                        <li data-bind="text: $data"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+        <!-- ko foreach: Questions -->
+        <div class="row">
+            <div class="sixteen wide column">
+                <h4 class="ui horizontal divider header">
+                    <i class="help icon"></i>
+                    Вопрос <!--ko text: $root.Questions().length > 1 ? '#' + ($index() + 1) : '' --><!--/ko-->
+                </h4>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="two wide column"></div>
+            <div class="twelve wide column">
+                <div class="ui form">
+                    <div class="grouped fields">
+                        <label data-bind="text: QuestionText"></label>
+                        <!-- ko foreach: Answers -->
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" data-bind="value: AnswerId, checked: $parent.SelectedAnswerId, attr: { name: 'question' + $parent.QuestionId(), id: 'answer' + AnswerId }">
+                                <label data-bind="text: AnswerText, attr: { for: 'answer' + AnswerId }"></label>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+
+    <div class="ui center aligned basic segment">
+        <button class="ui teal centered large submit button" data-bind="click: SaveVote">Отправить</button>
+    </div>
 </div>
 
 @section Scripts {
+    @Scripts.Render("~/bundles/voting")
+
     <script>
-        var viewModel = new MainViewModel();
+        var viewModel = new VotingViewModel();
         $(function () {
             viewModel.GetVote();
 
             ko.applyBindings(viewModel);
         });
-
-        function MainViewModel() {
-            var self = this;
-            self.User = ko.observable();
-            self.Questions = ko.observableArray([]);
-
-            self.GetVote = function () {
-                $.ajax({
-                    url: '/api/voting',
-                    type: 'GET',
-                    success: function (response) {
-                        self.User(new UserViewModel(response.User));
-
-                        if (response.Questions && response.Questions.length > 0) {
-                            for (var i = 0; i < response.Questions.length; i++) {
-                                self.Questions.push(new QuestionViewModel(response.Questions[i]));
-                            }
-                        }
-
-                        $('.ui.dropdown').dropdown({ on: 'hover' });
-                        $('.ui.grid')
-                            .form({
-                                fields: {
-                                    empty: {
-                                        identifier: 'username',
-                                        rules: [
-                                            {
-                                                type: 'empty',
-                                                prompt: 'Необходимо указать имя'
-                                            }
-                                        ]
-                                    },
-                                    gender: {
-                                        identifier: 'gender',
-                                        rules: [
-                                            {
-                                                type: 'empty',
-                                                prompt: 'Выберите пол'
-                                            }
-                                        ]
-                                    },
-                                    age: {
-                                        identifier: 'age',
-                                        rules: [
-                                            {
-                                                type: 'empty',
-                                                prompt: 'Необходимо указать возраст'
-                                            },
-                                            {
-                                                type: 'integer[18..80]',
-                                                prompt: 'Допускаются только люди возрастом от 18 до 80 лет'
-                                            }
-                                        ]
-                                    }
-                                }
-                            });
-                    },
-                    error: function (error) {
-                        var message = 'При получении данных произошла ошибка';
-                        console.log(message);
-                        var noty = new Noty(notyOptions);
-                        noty.options.type = 'error';
-                        noty.options.text = message;
-                        noty.show();
-                    }
-                });
-            };
-
-            self.SaveVote = function () {
-                if (!self.ValidateVote()) return;
-
-                var postData = ko.toJSON(self);
-
-                $.ajax({
-                    method: 'POST',
-                    url: '/api/voting',
-                    data: postData,
-                    contentType: "application/json; charset=utf-8",
-                    beforeSend: function () { },
-                    error: function (response) {
-                        var message = 'Пожалуйста, исправьте ошибки';
-                        var noty = new Noty(notyOptions);
-                        noty.options.type = 'error';
-                        noty.options.text = message;
-                        noty.show();
-                    },
-                    success: function (response) { }
-                });
-            };
-
-            self.ValidateVote = function () {
-                $('.ui.grid').form('validate form');
-                var isValid = $('.ui.grid').form('is valid');
-                if (!isValid) {
-                    var message = 'Пожалуйста, исправьте ошибки';
-                    var noty = new Noty(notyOptions);
-                    noty.options.type = 'error';
-                    noty.options.text = message;
-                    noty.show();
-                    $('#errors').show();
-                } else {
-                    $('#errors').hide();
-                }
-
-                return isValid;
-            };
-        };
-
-        function UserViewModel(userViewModel) {
-            if (!userViewModel) {
-                userViewModel = {};
-            }
-
-            var self = this;
-            self.UserId = ko.observable(userViewModel.UserId || 0);
-            self.Username = ko.observable(userViewModel.Username || '');
-            self.Age = ko.observable(userViewModel.Age || '');
-            self.GenderId = ko.observable(userViewModel.GenderId || 0);
-            self.Genders = ko.observableArray(userViewModel.Genders || []);
-        }
-
-        UserViewModel.prototype.toJSON = function () {
-            var copy = ko.toJS(this);
-            delete copy.Genders;
-            return copy;
-        }
-
-        function QuestionViewModel(questionViewModel) {
-            if (!questionViewModel) {
-                questionViewModel = {};
-            }
-
-            var self = this;
-            self.QuestionId = ko.observable(questionViewModel.QuestionId || 0);
-            self.QuestionText = ko.observable(questionViewModel.QuestionText || '');
-            self.SelectedAnswerId = ko.observable(questionViewModel.SelectedAnswerId || 0);
-            self.Answers = ko.observableArray(questionViewModel.Answers || []);
-        }
-
-        QuestionViewModel.prototype.toJSON = function () {
-            var copy = ko.toJS(this);
-            delete copy.QuestionText;
-            delete copy.Answers;
-            return copy;
-        }
     </script>
 }

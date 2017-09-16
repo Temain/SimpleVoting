@@ -25,13 +25,13 @@ namespace SimpleVoting.Logic.Models
         /// </summary>
         [Required(ErrorMessage = "Необходимо указать возраст")]
         [Range(18, 80, ErrorMessage = "Допускаются только люди возрастом от 18 до 80 лет")]
-        public int Age { get; set; }
+        public int? Age { get; set; }
 
         /// <summary>
         /// Пол
         /// </summary>
         [Required(ErrorMessage = "Выберите пол")]
-        public int GenderId { get; set; }
+        public int? GenderId { get; set; }
         public List<GenderViewModel> Genders { get; set; }
     }
 }

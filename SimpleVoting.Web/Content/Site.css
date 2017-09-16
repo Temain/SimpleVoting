@@ -2,19 +2,20 @@
     padding-top: 3em;
 }
 
+h1, h2, h3, h4 {
+    font-weight: normal !important;
+}
+
 .ui.container h1 {
     font-size: 3em;
     text-align: center;
-    font-weight: normal;
 }
 
 .ui.container h2.header {
     font-size: 1.8em;
-    font-weight: normal;
 }
 
 .ui.container h4.divider {
-    font-weight: normal;
     margin-top: 1em;
 }
 
@@ -37,4 +38,13 @@
 
 .ui.radio label {
     cursor: pointer !important;
+}
+
+.questions {
+    padding-top: 1em;
+}
+
+.questions .progress.voters {
+    width: 15em;
+    margin-bottom: 1em;
 }

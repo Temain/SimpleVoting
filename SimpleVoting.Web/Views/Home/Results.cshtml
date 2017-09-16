@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Результаты";
+}
+
+<h1>Результаты голосования</h1>
+
+<div id="results">
+    <div class="questions" data-bind="foreach: Questions">
+        <h3 class="ui header" data-bind="text: QuestionText"></h3>
+        <div class="ui list" data-bind="foreach: Answers">
+            <div class="item">
+                <div class="left floated content">
+                    <div class="ui small teal progress voters" data-bind="attr: { 'data-value': NumberOfVoters, 'data-total': $parent.NumberOfVoters }">
+                        <div class="bar"></div>
+                        <div class="label" data-bind="text: NumberOfVoters + ' из ' + $parent.NumberOfVoters">Small</div>
+                    </div>
+                </div>
+
+                <div class="content" data-bind="text: AnswerText"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ui center aligned basic segment">
+        <a href="@Url.Action("Index", "Home")" class="ui teal centered large submit button">Голосовать</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var viewModel = new ResultsViewModel();
+        $(function () {
+            viewModel.LoadData();
+
+            ko.applyBindings(viewModel);
+        });
+
+        function ResultsViewModel() {
+            var self = this;
+            self.Questions = ko.observableArray([]);
+
+            self.LoadData = function () {
+                $.ajax({
+                    url: '/api/voting/results',
+                    type: 'GET',
+                    success: function (response) {
+                        self.Questions(response);
+                    },
+                    error: function (error) {
+                        var message = 'При получении данных произошла ошибка';
+                        console.log(message);
+                        var noty = new Noty(notyOptions);
+                        noty.options.type = 'error';
+                        noty.options.text = message;
+                        noty.show();
+                    }
+                });
+            };
+        }
+    </script>
+}

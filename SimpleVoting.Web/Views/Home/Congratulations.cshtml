@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Поздравления";
+}
+
+<div class="ui middle aligned center aligned grid">
+    <div class="column">
+        <h1 class="ui icon header">
+            <i class="checkmark green icon"></i>
+            <div class="content">
+                Спасибо, Ваш голос учтён!
+                <div class="sub header">Можете посмотреть результаты или снова перейти к голосованию</div>
+            </div>
+        </h1>
+        <div class="ui basic segment">
+            <a href="@Url.Action("Index", "Home")" class="ui centered large submit button">Голосовать</a>
+            <a href="@Url.Action("Results","Home")" class="ui green centered large button">Результаты</a>
+        </div>
+    </div>
+</div>

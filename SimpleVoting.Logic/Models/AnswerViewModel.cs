@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimpleVoting.Logic.Models
+﻿namespace SimpleVoting.Logic.Models
 {
     /// <summary>
     /// Опция (вариант ответа) для голосования
@@ -20,5 +14,10 @@ namespace SimpleVoting.Logic.Models
         /// Текст опции
         /// </summary>
         public string AnswerText { get; set; }
+
+        /// <summary>
+        /// Количество проголосовавших
+        /// </summary>
+        public int? NumberOfVoters { get; set; }
     }
 }

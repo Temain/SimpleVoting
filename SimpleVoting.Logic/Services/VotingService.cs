@@ -106,12 +106,10 @@ namespace SimpleVoting.Logic.Services
             var user = new User
             {
                 Username = viewModel.User.Username,
-                GenderId = viewModel.User.GenderId,
-                Age = viewModel.User.Age,
+                GenderId = viewModel.User.GenderId ?? 0,
+                Age = viewModel.User.Age ?? 0,
                 Answers = answers
             };
-
-            throw new Exception("Но-но-но!");
 
             _context.Users.Add(user);
             _context.SaveChanges();

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace SimpleVoting.Logic.Models
 {
@@ -26,6 +21,11 @@ namespace SimpleVoting.Logic.Models
         /// Выбранный вариант ответа
         /// </summary>
         public int SelectedAnswerId { get; set; }
+
+        /// <summary>
+        /// Количество проголосовавших
+        /// </summary>
+        public int? NumberOfVoters { get; set; }
 
         /// <summary>
         /// Опции для голосования

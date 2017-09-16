@@ -12,5 +12,15 @@ namespace SimpleVoting.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Congratulations()
+        {
+            return View();
+        }
+
+        public ActionResult Results()
+        {
+            return View();
+        }
     }
 }
