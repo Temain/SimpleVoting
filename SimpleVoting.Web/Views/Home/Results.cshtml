@@ -22,11 +22,12 @@
     </div>
 
     <div class="ui center aligned basic segment">
-        <a href="@Url.Action("Index", "Home")" class="ui teal centered large submit button">Голосовать</a>
+        <a href="@Url.Action("Index", "Home")" class="ui teal centered large button">Голосовать</a>
     </div>
 </div>
 
 @section Scripts {
+    <script src="~/Scripts/voting/results.js"></script>
     <script>
         var viewModel = new ResultsViewModel();
         $(function () {
@@ -34,28 +35,5 @@
 
             ko.applyBindings(viewModel);
         });
-
-        function ResultsViewModel() {
-            var self = this;
-            self.Questions = ko.observableArray([]);
-
-            self.LoadData = function () {
-                $.ajax({
-                    url: '/api/voting/results',
-                    type: 'GET',
-                    success: function (response) {
-                        self.Questions(response);
-                    },
-                    error: function (error) {
-                        var message = 'При получении данных произошла ошибка';
-                        console.log(message);
-                        var noty = new Noty(notyOptions);
-                        noty.options.type = 'error';
-                        noty.options.text = message;
-                        noty.show();
-                    }
-                });
-            };
-        }
     </script>
 }

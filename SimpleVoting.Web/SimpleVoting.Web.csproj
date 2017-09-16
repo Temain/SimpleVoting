@@ -186,7 +186,6 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\GendersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\VotingController.cs" />
     <Compile Include="Global.asax.cs">
@@ -238,6 +237,7 @@
     <Content Include="Scripts\semantic.min.js" />
     <Content Include="Scripts\semantic.site.js" />
     <Content Include="Scripts\voting\question.js" />
+    <Content Include="Scripts\voting\results.js" />
     <Content Include="Scripts\voting\user.js" />
     <Content Include="Scripts\voting\voting.js" />
     <Content Include="Web.config" />
