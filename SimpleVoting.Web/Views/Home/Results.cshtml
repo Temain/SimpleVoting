@@ -4,7 +4,13 @@
 
 <h1>Результаты голосования</h1>
 
-<div id="results">
+<!-- ko if: !IsDataLoaded() -->
+<div class="ui active inverted dimmer">
+    <div class="ui big text loader">Загрузка</div>
+</div>
+<!-- /ko -->
+
+<div id="results" data-bind="visible: IsDataLoaded" style="display: none;">
     <div class="questions" data-bind="foreach: Questions">
         <h3 class="ui header" data-bind="text: QuestionText"></h3>
         <div class="ui list" data-bind="foreach: Answers">

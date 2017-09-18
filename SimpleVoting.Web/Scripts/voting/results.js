@@ -1,6 +1,7 @@
 ﻿function ResultsViewModel() {
     var self = this;
     self.Questions = ko.observableArray([]);
+    self.IsDataLoaded = ko.observable(false);
 
     self.InitSemantic = function () {
         $('.ui.progress').progress();
@@ -12,6 +13,11 @@
             type: 'GET',
             success: function (response) {
                 self.Questions(response);
+
+                setTimeout(function () {
+                    self.IsDataLoaded(true);
+                }, 500);
+
                 self.InitSemantic();
             },
             error: function (error) {

@@ -106,7 +106,7 @@
     </div>
 
     <div class="ui center aligned basic segment">
-        <button class="ui teal centered large submit button" data-bind="click: SaveVote">Отправить</button>
+        <button class="ui teal centered large submit button" data-bind="enable: !InSaveProcess(), click: SaveVote">Отправить</button>
     </div>
 </div>
 

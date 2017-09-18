@@ -4,6 +4,7 @@
     self.Questions = ko.observableArray([]);
     self.ValidationErrors = ko.observableArray([]);
     self.IsDataLoaded = ko.observable(false);
+    self.InSaveProcess = ko.observable(false);
 
     self.InitSemantic = function () {
         $('.ui.dropdown').dropdown({ on: 'hover' });
@@ -81,6 +82,7 @@
     self.SaveVote = function () {
         if (!self.ValidateVote()) return;
 
+        self.InSaveProcess(true);
         var postData = ko.toJSON(self);
 
         $.ajax({
@@ -100,6 +102,8 @@
                     noty.options.text = message;
                     noty.show();
                 }
+
+                self.InSaveProcess(false);
             },
             success: function (response) {
                 window.location = '/Home/Congratulations';
